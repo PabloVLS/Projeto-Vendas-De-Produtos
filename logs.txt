@@ -1,0 +1,10 @@
+dez. 04, 2023 10:47:31 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Bacon (kg), Quantidade: 90
+dez. 04, 2023 10:47:31 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Peito de Frango (kg), Quantidade: 2
+dez. 04, 2023 10:47:31 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$3632.34
+dez. 04, 2023 10:48:35 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Brócolis (Unidade), Quantidade: 2
+dez. 04, 2023 10:48:35 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$11.98

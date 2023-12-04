@@ -17,7 +17,9 @@ public class HistoricoView extends javax.swing.JFrame {
 
     public HistoricoView() {
         initComponents();
-        atualizarTabelaHistorico();
+        HistoricoDao historicoDao = new HistoricoDao();
+        List<Historico> historico = historicoDao.atualizarHistorico();
+        atualizarTabelaHistorico(historico);
     }
 
     @SuppressWarnings("unchecked")
@@ -170,10 +172,7 @@ public class HistoricoView extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    public void atualizarTabelaHistorico() {
-        HistoricoDao historicoDao = new HistoricoDao();
-        List<Historico> historico = historicoDao.atualizarHistorico();
-
+    public void atualizarTabelaHistorico(List<Historico> historico) {
         DefaultTableModel model = (DefaultTableModel) jtHistorico.getModel();
         model.setRowCount(0); // Limpa a tabela
 
@@ -183,10 +182,11 @@ public class HistoricoView extends javax.swing.JFrame {
                 historicoItem.getId_produto(),
                 historicoItem.getNomeProduto(),
                 historicoItem.getQuantidade_vendida(),
-                historicoItem.getNomeCliente(), // Inclua o nome do cliente na exibição
+                historicoItem.getNomeCliente(),
                 historicoItem.getData_venda()
             });
         }
+        System.out.println("Tabela de histórico atualizada com sucesso!");
     }
 
     public int getProximoCodigoVenda() {
@@ -194,15 +194,7 @@ public class HistoricoView extends javax.swing.JFrame {
         return ultimoCodigoVenda;
     }
 
-    /* public void atualizarTabela(int codigoVenda, int idProduto, int quantidadeVendida, String data) {
-        
-        DefaultTableModel model = (DefaultTableModel) jtHistorico.getModel();
-        model.addRow(new Object[]{codigoVenda, idProduto, quantidadeVendida, data});
-        System.out.println("adicionou a linha no historico.");
-    }*/
-    
     public static void main(String args[]) {
-        System.out.println("abriu");
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HistoricoView().setVisible(true);

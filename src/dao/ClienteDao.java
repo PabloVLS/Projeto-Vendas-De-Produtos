@@ -24,69 +24,60 @@ public class ClienteDao {
     }
 
     public void insert(Cliente cliente) {
-        String sql = ("INSERT INTO cliente (nome,cpf,email,telefone) VALUES(?,?,?,?)");
+        String sql = "INSERT INTO cliente (nome,cpf,email,telefone) VALUES(?,?,?,?)";
 
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
             stmt.setString(4, cliente.getTelefone());
             stmt.execute();
-            stmt.close();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            // Tratar a exceção ,imprimindo no console ou registrando em um sistema de log
+            e.printStackTrace();
         }
     }
 
     public List<Cliente> leitura() {
-        connection = new ConnectionFactory().getConnection();
-        PreparedStatement stml = null;
-        ResultSet rs = null;
-
         List<Cliente> clientes = new ArrayList<>();
 
-        try {
-            stml = connection.prepareStatement("SELECT * FROM cliente");
-            rs = stml.executeQuery();
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt = connection.prepareStatement("SELECT * FROM cliente");  ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
 
                 cliente.setIdCliente(rs.getInt("idCliente"));
                 cliente.setNome(rs.getString("nome"));
-                cliente.setCpf(rs.getNString("cpf"));
-                cliente.setEmail(rs.getNString("email"));
-                cliente.setTelefone(rs.getNString("telefone"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
                 clientes.add(cliente);
-
             }
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "View possui um erro !!!!");
+            e.printStackTrace();
         }
         return clientes;
     }
 
     public void delete(Cliente cliente) {
         String sql = "DELETE FROM cliente WHERE idCliente = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+
             stmt.setInt(1, cliente.getIdCliente());
             stmt.execute();
-            stmt.close();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir o Cliente !");
+            e.printStackTrace();
         }
-
     }
 
     public void editar(Cliente cliente) {
-        String sql = "UPDATE cliente SET nome = ? , cpf = ? , email = ? , telefone = ? WHERE idCliente = ?";
+        String sql = "UPDATE cliente SET nome = ?, cpf = ?, email = ?, telefone = ? WHERE idCliente = ?";
 
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
@@ -94,11 +85,9 @@ public class ClienteDao {
             stmt.setInt(5, cliente.getIdCliente());
 
             stmt.execute();
-            stmt.close();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao editar Cliente !!! !");
+            e.printStackTrace();
         }
     }
-
 }

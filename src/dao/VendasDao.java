@@ -29,31 +29,28 @@ public class VendasDao {
     }
 
     public List<Produto> leitura1() {
-        connection = new ConnectionFactory().getConnection();
-        PreparedStatement stmt1 = null;
-        ResultSet rs = null;
-
         List<Produto> produtos = new ArrayList<>();
 
-        try {
-            stmt1 = connection.prepareStatement("SELECT * FROM produto");
-            rs = stmt1.executeQuery();
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM produto");  ResultSet rs = stmt1.executeQuery()) {
 
             while (rs.next()) {
                 Produto produto = new Produto();
-
                 produto.setIdProduto(rs.getInt("idProduto"));
                 produto.setNomeProduto(rs.getString("nomeProduto"));
                 produto.setDescricao(rs.getNString("descricao"));
                 produto.setValor(rs.getDouble("valor"));
                 produto.setEstoque(rs.getInt("estoque"));
                 produtos.add(produto);
-
             }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ViewVendasDao possui um erro !!!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao ler dados do banco de dados");
+            // Aqui, você pode escolher retornar uma lista vazia ou lançar uma exceção
+            // return Collections.emptyList(); // Lista vazia
+            throw new RuntimeException("Erro ao ler dados do banco de dados", e); // Lança uma exceção
         }
+
         return produtos;
     }
 
@@ -163,48 +160,20 @@ public class VendasDao {
     }
 
     public int obterIdClientePorNome(String nomeCliente) {
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
         int idCliente = -1; // Valor padrão para indicar que o cliente não foi encontrado
 
-        try {
-            connection = new ConnectionFactory().getConnection();
-            String sql = "SELECT idCliente FROM cliente WHERE nome = ?";
-            stmt = connection.prepareStatement(sql);
+        try ( Connection connection = new ConnectionFactory().getConnection();  PreparedStatement stmt = connection.prepareStatement("SELECT idCliente FROM cliente WHERE nome = ?")) {
+
             stmt.setString(1, nomeCliente);
 
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                idCliente = rs.getInt("idCliente"); // ID do cliente encontrado
+            try ( ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    idCliente = rs.getInt("idCliente"); // ID do cliente encontrado
+                }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            // Feche os recursos (stmt, rs e conexão) aqui
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
         return idCliente;
@@ -217,10 +186,11 @@ public class VendasDao {
         // Se você estiver usando um sistema de banco de dados, pode usar PreparedStatement e ResultSet para fazer a consulta.
 
         // Exemplo de lógica fictícia para verificar a existência do cliente:
-        connection = new ConnectionFactory().getConnection();
+        Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
+            connection = new ConnectionFactory().getConnection();
             String sql = "SELECT id FROM clientes WHERE nome = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, nomeCliente);
@@ -230,10 +200,22 @@ public class VendasDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar recursos: " + ex.getMessage());
+            }
+        }
     }
-
-    
 
     public List<ProdutoHistorico> vendido(int idProduto, int quantidadeComprada) {
         Connection connection = null;
@@ -266,8 +248,8 @@ public class VendasDao {
             int linhasAtualizadas = stmt.executeUpdate();
 
             if (linhasAtualizadas > 0) {
-                JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!");
                 
+
                 /* ERA UMA TEORIA DE REALIZAR O HISTORICO DE VENDAS AQUI , MAS NAO DEU
                 
                 // Registrando a venda na tabela historico_de_vendas
@@ -284,7 +266,7 @@ public class VendasDao {
                 produtoHistorico.setEstoque(novoEstoque);
                 System.out.println("Atualizou a tabela de vendas , o quantidade foi atualziada");
                 produtosHistorico.add(produtoHistorico);
-                */
+                 */
             } else {
                 JOptionPane.showMessageDialog(null, "Falha na atualização da quantidade.");
             }
@@ -308,7 +290,6 @@ public class VendasDao {
         return produtosHistorico;
     }
 
-    
     public List<String> leituraCliente(String cpf) {
         Connection connection = null;
         PreparedStatement stm3 = null;
@@ -331,6 +312,20 @@ public class VendasDao {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "View possui um erro !!!!");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm3 != null) {
+                    stm3.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
         return clientesEncontrados;
     }

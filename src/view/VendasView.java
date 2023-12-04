@@ -27,14 +27,8 @@ public class VendasView extends javax.swing.JFrame {
         leiaJtableProduto();
     }
 
-    
+    VendasView() {
 
-    public String getTxfDadosProdutoIdCodigoText() {
-        return txfDadosProdutoIdCodigo.getText();
-    }
-
-    public String getTxfDadosProdutoQuantidadeText() {
-        return txfDadosProdutoQuantidade.getText();
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +63,6 @@ public class VendasView extends javax.swing.JFrame {
         jtTabelaProdutosVendendo = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         txfTotalCalculoItensAdicionados = new javax.swing.JTextField();
-        jbComprar = new javax.swing.JButton();
         jbCancelarVenda = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -192,7 +185,8 @@ public class VendasView extends javax.swing.JFrame {
 
         jbAdicionarCarrinho.setBackground(new java.awt.Color(51, 51, 51));
         jbAdicionarCarrinho.setForeground(new java.awt.Color(204, 204, 204));
-        jbAdicionarCarrinho.setText("Adicionar Item");
+        jbAdicionarCarrinho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/icons8-carrinho-de-compras-60.png"))); // NOI18N
+        jbAdicionarCarrinho.setText("Adicionar no Carrinho");
         jbAdicionarCarrinho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAdicionarCarrinhoActionPerformed(evt);
@@ -251,9 +245,9 @@ public class VendasView extends javax.swing.JFrame {
                     .addComponent(txfDadosProdutoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(txfDadosProdutoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addComponent(jbAdicionarCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jbAdicionarCarrinho)
+                .addGap(17, 17, 17))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
@@ -339,8 +333,10 @@ public class VendasView extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txfTotalCalculoItensAdicionados, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,17 +348,6 @@ public class VendasView extends javax.swing.JFrame {
                     .addComponent(txfTotalCalculoItensAdicionados, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
-
-        jbComprar.setBackground(new java.awt.Color(51, 51, 51));
-        jbComprar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jbComprar.setForeground(new java.awt.Color(204, 204, 204));
-        jbComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/icons8-carrinho-de-compras-60.png"))); // NOI18N
-        jbComprar.setText("Adicionar no Carrinho");
-        jbComprar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbComprarActionPerformed(evt);
-            }
-        });
 
         jbCancelarVenda.setBackground(new java.awt.Color(51, 51, 51));
         jbCancelarVenda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -479,20 +464,14 @@ public class VendasView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jbComprar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
-                                .addComponent(jbCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(239, 239, 239))))))
+                        .addGap(62, 62, 62)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(jbCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,11 +506,9 @@ public class VendasView extends javax.swing.JFrame {
                         .addGap(2, 2, 2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
+                            .addComponent(jbCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -574,8 +551,8 @@ public class VendasView extends javax.swing.JFrame {
             txfDadosProdutoPreco.setText(jtProduto.getValueAt(jtProduto.getSelectedRow(), 3).toString());
 
         }
-        
-       
+
+
     }//GEN-LAST:event_jtProdutoMouseClicked
 
     private void jbAdicionarCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarCarrinhoActionPerformed
@@ -668,12 +645,47 @@ public class VendasView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Cpf não deferido!");
         }
 
+        /* String idProdutoTexto = txfDadosProdutoIdCodigo.getText();
+        String quantidadeCompradaTexto = txfDadosProdutoQuantidade.getText();
+        String dadosProdutoIdCodigo = txfDadosProdutoIdCodigo.getText();
+
+        try {
+            int idProduto = Integer.parseInt(idProdutoTexto);
+            int produto = Integer.parseInt(dadosProdutoIdCodigo);
+            int quantidadeComprada = Integer.parseInt(quantidadeCompradaTexto);
+            String nomeCliente = txfNome.getText();
+
+            VendasDao vDao = new VendasDao();
+            int idCliente = vDao.obterIdClientePorNome(nomeCliente);
+
+            HistoricoDao hDao = new HistoricoDao();
+            String nomeProduto = hDao.obterNomeProdutoPorId(produto);
+
+            if (idCliente > 0) {
+                if (!quantidadeCompradaTexto.isEmpty()) {
+                    HistoricoDao historico = new HistoricoDao();
+                    historico.cadastrarHistorico(idProduto, nomeProduto, quantidadeComprada, idCliente);
+                    historicoView.atualizarTabelaHistorico();
+                    txfDadosProdutoIdCodigo.setText("");
+                    txfDadosProdutoQuantidade.setText("");
+                    vDao.vendido(idProduto, quantidadeComprada);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Digite a quantidade !");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para o ID do produto e a quantidade.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao registrar a venda no banco de dados.");
+        }*/
 
     }//GEN-LAST:event_jbAdicionarCarrinhoActionPerformed
 
     // Essa parte abaixo esta em teste , tive uma ideia mais ainda e incabivel
-    
-   /* private void jbFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
+    /* private void jbFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         // Aqui você registra a venda no histórico de vendas, pois o cliente está finalizando a compra.
         HistoricoDao historicoDao = new HistoricoDao();
         VendasDao vDao = new VendasDao();
@@ -688,7 +700,6 @@ public class VendasView extends javax.swing.JFrame {
         txfTotalCalculoItensAdicionados.setText("R$0.0"); // Reinicialize o total após a compra.
         jtTabelaProdutosVendendo.setModel(new DefaultTableModel()); // Limpe o carrinho de compras.
     }*/
-
 
     private void jbCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarVendaActionPerformed
         txfDadosProdutoIdCodigo.setText("");
@@ -743,44 +754,6 @@ public class VendasView extends javax.swing.JFrame {
         produtosView.setVisible(true);
         this.dispose();    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jbComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbComprarActionPerformed
-        String idProdutoTexto = txfDadosProdutoIdCodigo.getText();
-        String quantidadeCompradaTexto = txfDadosProdutoQuantidade.getText();
-        String dadosProdutoIdCodigo = txfDadosProdutoIdCodigo.getText();
-
-        try {
-            int idProduto = Integer.parseInt(idProdutoTexto);
-            int produto = Integer.parseInt(dadosProdutoIdCodigo);
-            int quantidadeComprada = Integer.parseInt(quantidadeCompradaTexto);
-            String nomeCliente = txfNome.getText();
-
-            VendasDao vDao = new VendasDao();
-            int idCliente = vDao.obterIdClientePorNome(nomeCliente);
-
-            HistoricoDao hDao = new HistoricoDao();
-            String nomeProduto = hDao.obterNomeProdutoPorId(produto);
-
-            if (idCliente > 0) {
-                if (!quantidadeCompradaTexto.isEmpty()) {
-                    HistoricoDao historico = new HistoricoDao();
-                    historico.cadastrarHistorico(idProduto, nomeProduto, quantidadeComprada, idCliente);
-                    historicoView.atualizarTabelaHistorico();
-                    txfDadosProdutoIdCodigo.setText("");
-                    txfDadosProdutoQuantidade.setText("");
-                    vDao.vendido(idProduto, quantidadeComprada);
-
-                } else {
-                    JOptionPane.showMessageDialog(this, "Digite a quantidade !");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para o ID do produto e a quantidade.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao registrar a venda no banco de dados.");
-        }
-    }//GEN-LAST:event_jbComprarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         HistoricoView hView = new HistoricoView();
@@ -789,21 +762,28 @@ public class VendasView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        PagamentosView pagView = new PagamentosView();
+
+        PagamentosView pagView = new PagamentosView(this, historicoView);
         pagView.setVisible(true);
         String totalidade = obterValorTotal();
-        
-        pagView.valorPagar(totalidade);
-       
-    }//GEN-LAST:event_jButton3ActionPerformed
 
+        pagView.valorPagar(totalidade);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+    public void limparCampos() {
+        txfDadosProdutoIdCodigo.setText("");
+        txfDadosProdutoQuantidade.setText("");
+        txfDadosProdutoNomeProduto.setText("");
+        txfDadosProdutoPreco.setText("");
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtTabelaProdutosVendendo.getModel();
+        modeloTabela.setRowCount(0);
+    }
     private void txfTotalCalculoItensAdicionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfTotalCalculoItensAdicionadosActionPerformed
-  
+
     }//GEN-LAST:event_txfTotalCalculoItensAdicionadosActionPerformed
 
     private void jtTabelaProdutosVendendoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaProdutosVendendoMouseClicked
-         if (jtTabelaProdutosVendendo.getSelectedRow() != -1) {
+        if (jtTabelaProdutosVendendo.getSelectedRow() != -1) {
             txfDadosProdutoIdCodigo.setText(jtTabelaProdutosVendendo.getValueAt(jtTabelaProdutosVendendo.getSelectedRow(), 0).toString());
             txfDadosProdutoNomeProduto.setText(jtTabelaProdutosVendendo.getValueAt(jtTabelaProdutosVendendo.getSelectedRow(), 1).toString());
             txfDadosProdutoQuantidade.setText(jtTabelaProdutosVendendo.getValueAt(jtTabelaProdutosVendendo.getSelectedRow(), 3).toString());
@@ -853,7 +833,6 @@ public class VendasView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbAdicionarCarrinho;
     private javax.swing.JButton jbCancelarVenda;
-    private javax.swing.JButton jbComprar;
     private javax.swing.JTable jtProduto;
     private javax.swing.JTable jtTabelaProdutosVendendo;
     private javax.swing.JFormattedTextField txfCpf;
@@ -865,14 +844,6 @@ public class VendasView extends javax.swing.JFrame {
     private javax.swing.JTextField txfTotalCalculoItensAdicionados;
     // End of variables declaration//GEN-END:variables
 
-    Object getTxfDadosProdutoIdCodigo() {
-        return txfDadosProdutoIdCodigo.getText();
-    }
-
-    Object getTxfDadosProdutoQuantidade() {
-        return txfDadosProdutoQuantidade.getText();
-    }
-
     public JTextField getTxfTotalCalculoItensAdicionados() {
         return txfTotalCalculoItensAdicionados;
     }
@@ -880,12 +851,40 @@ public class VendasView extends javax.swing.JFrame {
     public void setTxfTotalCalculoItensAdicionados(JTextField txfTotalCalculoItensAdicionados) {
         this.txfTotalCalculoItensAdicionados = txfTotalCalculoItensAdicionados;
     }
+
     public String obterValorTotal() {
         String totalidade = txfTotalCalculoItensAdicionados.getText();
-        System.out.println("totalidade:"+totalidade);
         return totalidade;
     }
-    
-    
-    
+
+    public String getTxfNome() {
+        String nome = txfNome.getText();
+        return nome;
+    }
+
+    public void setTxfNome(JTextField txfNome) {
+        this.txfNome = txfNome;
+    }
+
+    public String getTxfDadosProdutoIdCodigoText() {
+        String idCodigo = txfDadosProdutoIdCodigo.getText();
+        return idCodigo;
+    }
+
+    public void setTxfDadosProdutoIdCodigoText(String string) {
+        this.txfDadosProdutoIdCodigo.setText(string);
+    }
+
+    public String getTxfDadosProdutoQuantidadeText() {
+        String quantidade = txfDadosProdutoQuantidade.getText();
+        return quantidade;
+    }
+
+    public void setTxfDadosProdutoQuantidadeText(String string) {
+        this.txfDadosProdutoQuantidade.setText(string);
+    }
+
+    public javax.swing.JTable getTabelaProdutosVendendo() {
+        return jtTabelaProdutosVendendo;
+    }
 }

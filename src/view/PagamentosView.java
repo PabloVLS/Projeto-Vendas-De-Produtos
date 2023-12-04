@@ -1,16 +1,37 @@
 package view;
 
+import dao.LoggerUtil;
+import dao.HistoricoDao;
 import dao.VendasDao;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import view.VendasView;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import model.Historico;
 
 public class PagamentosView extends javax.swing.JFrame {
 
     private HistoricoView historicoView;
+    private VendasView vView;
 
-    public PagamentosView() {
-        initComponents();
-
+    private static VendasView obterInstanciaVendasView() {
+        return new VendasView();
     }
+
+    private static HistoricoView obterInstanciaHistoricoView() {
+        return new HistoricoView();
+    }
+
+    public PagamentosView(VendasView vendasView, HistoricoView historicoView) {
+        initComponents();
+        this.vView = vendasView;
+        this.historicoView = historicoView;
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -24,7 +45,7 @@ public class PagamentosView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jBConcluirPagamento = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -33,7 +54,7 @@ public class PagamentosView extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -57,9 +78,9 @@ public class PagamentosView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jlValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jlValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
-                .addGap(292, 292, 292))
+                .addGap(193, 193, 193))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,13 +120,13 @@ public class PagamentosView extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/1034362_payment_bank_card_credit_finance_icon.png"))); // NOI18N
         jButton4.setText("    Vale Alimentação                                                                                          ");
 
-        jButton5.setBackground(new java.awt.Color(0, 102, 204));
-        jButton5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(204, 204, 204));
-        jButton5.setText("Concluir");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jBConcluirPagamento.setBackground(new java.awt.Color(0, 102, 204));
+        jBConcluirPagamento.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jBConcluirPagamento.setForeground(new java.awt.Color(204, 204, 204));
+        jBConcluirPagamento.setText("Concluir");
+        jBConcluirPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jBConcluirPagamentoActionPerformed(evt);
             }
         });
 
@@ -153,7 +174,7 @@ public class PagamentosView extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jBConcluirPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(100, 100, 100))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -192,7 +213,7 @@ public class PagamentosView extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBConcluirPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -217,25 +238,70 @@ public class PagamentosView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void jBConcluirPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConcluirPagamentoActionPerformed
+        try {
+            String nomeCliente = vView.getTxfNome();
+            VendasDao vDao = new VendasDao();
+            HistoricoDao hDao = new HistoricoDao();
+            int idCliente = vDao.obterIdClientePorNome(nomeCliente);
+
+            if (idCliente > 0) {
+                javax.swing.JTable tabelaProdutosVendendo = vView.getTabelaProdutosVendendo();
+
+                for (int i = 0; i < tabelaProdutosVendendo.getRowCount(); i++) {
+                    String idProdutoTexto = tabelaProdutosVendendo.getValueAt(i, 0).toString();
+                    String nomeProduto = tabelaProdutosVendendo.getValueAt(i, 1).toString();
+                    String quantidadeCompradaTexto = tabelaProdutosVendendo.getValueAt(i, 3).toString();
+
+                    int idProduto = Integer.parseInt(idProdutoTexto);
+                    int quantidadeComprada = Integer.parseInt(quantidadeCompradaTexto);
+
+                    int ultimoIdHistorico = hDao.cadastrarHistorico(idProduto, nomeProduto, quantidadeComprada, idCliente);
+
+                    if (ultimoIdHistorico > 0) {
+                        LoggerUtil.registrarLog("Venda concluída - Produto: " + nomeProduto + ", Quantidade: " + quantidadeComprada);
+                        // Operações adicionais após o cadastro do histórico
+                        vDao.vendido(idProduto, quantidadeComprada);
+                    } else {
+                        System.out.println("Falha ao obter o último ID de histórico para o produto: " + nomeProduto);
+                    }
+                }
+                String valores = jlValorTotal.getText();
+                LoggerUtil.registrarLog(" Valor da Venda : "+ valores );
+                // Obter o histórico e atualizar a tabela
+                historicoView.atualizarTabelaHistorico(hDao.atualizarHistorico());
+                JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!");
+                // Limpar campos TXF Vendas
+                vView.limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para a quantidade.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao registrar a venda no banco de dados.");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jBConcluirPagamentoActionPerformed
 
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PagamentosView().setVisible(true);
+                VendasView vendasView = obterInstanciaVendasView();
+                HistoricoView historicoView = obterInstanciaHistoricoView();
+                PagamentosView pagamentosView = new PagamentosView(vendasView, historicoView);
+                pagamentosView.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBConcluirPagamento;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -259,4 +325,7 @@ public class PagamentosView extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    
+    
 }
