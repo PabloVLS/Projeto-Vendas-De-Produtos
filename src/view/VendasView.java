@@ -173,6 +173,7 @@ public class VendasView extends javax.swing.JFrame {
 
         jLabel5.setText("Produto:");
 
+        txfDadosProdutoNomeProduto.setEditable(false);
         txfDadosProdutoNomeProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfDadosProdutoNomeProdutoActionPerformed(evt);
@@ -180,6 +181,8 @@ public class VendasView extends javax.swing.JFrame {
         });
 
         jLabel6.setText("Preço:");
+
+        txfDadosProdutoPreco.setEditable(false);
 
         jLabel7.setText("Quantidade:");
 
@@ -341,7 +344,7 @@ public class VendasView extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -519,7 +522,7 @@ public class VendasView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -610,34 +613,38 @@ public class VendasView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Cpf não deferido!");
         }*/
 
-        int quantidadeUsuario = Integer.parseInt((String) txfDadosProdutoQuantidade.getText());
         int linhaSelecionada = jtProduto.getSelectedRow();
 
         if (chaveCompra) {
-            if (txfDadosProdutoQuantidade.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Digite a quantidade!");
+            if (txfDadosProdutoNomeProduto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Escolha o produto !");
             } else {
-                if (jtProduto.getSelectedRow() != -1) {
-                    int quantidadeNoEstoque = (int) jtProduto.getValueAt(linhaSelecionada, 4);
+                if (txfDadosProdutoQuantidade.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Digite a quantidade !");
+                } else {
+                    int quantidadeUsuario = Integer.parseInt((String) txfDadosProdutoQuantidade.getText());
+                    if (jtProduto.getSelectedRow() != -1) {
+                        int quantidadeNoEstoque = (int) jtProduto.getValueAt(linhaSelecionada, 4);
 
-                    if (quantidadeNoEstoque < quantidadeUsuario) {
-                        JOptionPane.showMessageDialog(null, "Não temos essa quantidade disponível!");
-                    } else {
-                        int idProduto = (int) jtProduto.getValueAt(linhaSelecionada, 0);
-                        double precoReferenteQuantidade = (double) jtProduto.getValueAt(linhaSelecionada, 3);
-                        double subtotal = quantidadeUsuario * precoReferenteQuantidade;
+                        if (quantidadeNoEstoque < quantidadeUsuario) {
+                            JOptionPane.showMessageDialog(null, "Não temos essa quantidade disponível!");
+                        } else {
+                            int idProduto = (int) jtProduto.getValueAt(linhaSelecionada, 0);
+                            double precoReferenteQuantidade = (double) jtProduto.getValueAt(linhaSelecionada, 3);
+                            double subtotal = quantidadeUsuario * precoReferenteQuantidade;
 
-                        String codigoProdutoVendendo = txfDadosProdutoIdCodigo.getText();
-                        String nomeProdutoVendendo = txfDadosProdutoNomeProduto.getText();
-                        String precoProdutoVendendo = txfDadosProdutoPreco.getText();
-                        String quantidadeProdutoVendendo = txfDadosProdutoQuantidade.getText();
+                            String codigoProdutoVendendo = txfDadosProdutoIdCodigo.getText();
+                            String nomeProdutoVendendo = txfDadosProdutoNomeProduto.getText();
+                            String precoProdutoVendendo = txfDadosProdutoPreco.getText();
+                            String quantidadeProdutoVendendo = txfDadosProdutoQuantidade.getText();
 
-                        DefaultTableModel jtModelo = (DefaultTableModel) jtTabelaProdutosVendendo.getModel();
-                        Object[] tabelaProdutosVendendo = {codigoProdutoVendendo, nomeProdutoVendendo, precoProdutoVendendo, quantidadeProdutoVendendo};
-                        jtModelo.addRow(tabelaProdutosVendendo);
+                            DefaultTableModel jtModelo = (DefaultTableModel) jtTabelaProdutosVendendo.getModel();
+                            Object[] tabelaProdutosVendendo = {codigoProdutoVendendo, nomeProdutoVendendo, precoProdutoVendendo, quantidadeProdutoVendendo};
+                            jtModelo.addRow(tabelaProdutosVendendo);
 
-                        totalCompra += subtotal; // Adiciona o subtotal ao total da compra
-                        txfTotalCalculoItensAdicionados.setText("R$" + totalCompra);
+                            totalCompra += subtotal; // Adiciona o subtotal ao total da compra
+                            txfTotalCalculoItensAdicionados.setText("R$" + totalCompra);
+                        }
                     }
                 }
             }
@@ -765,8 +772,13 @@ public class VendasView extends javax.swing.JFrame {
 
         PagamentosView pagView = new PagamentosView(this, historicoView);
         pagView.setVisible(true);
-        String totalidade = obterValorTotal();
 
+        String totalidade = obterValorTotal();
+        String nomeVenda = getTxfNome();
+
+        PagPix pagPix = new PagPix(pagView);
+
+        pagPix.pegarNome(nomeVenda);
         pagView.valorPagar(totalidade);
 
     }//GEN-LAST:event_jButton3ActionPerformed

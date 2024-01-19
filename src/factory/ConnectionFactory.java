@@ -10,7 +10,8 @@ public class ConnectionFactory {
    
     public Connection getConnection(){
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/cadastropessoas","root","root");
+            // se erro coloque senha root e colocar o connector na libraries
+            return DriverManager.getConnection("jdbc:mysql://localhost/cadastropessoas","root","");
                    
         } catch (Exception excecao) {
             throw new RuntimeException(excecao);

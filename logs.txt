@@ -8,3 +8,37 @@ dez. 04, 2023 10:48:35 AM dao.LoggerUtil registrarLog
 INFO: Venda concluída - Produto: Brócolis (Unidade), Quantidade: 2
 dez. 04, 2023 10:48:35 AM dao.LoggerUtil registrarLog
 INFO:  Valor da Venda : R$11.98
+dez. 04, 2023 11:17:04 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Patinho (kg), Quantidade: 30
+dez. 04, 2023 11:17:04 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$963.9000000000001
+dez. 08, 2023 8:59:34 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Coxão Mole (kg), Quantidade: 3
+dez. 08, 2023 8:59:34 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Coxão Mole (kg), Quantidade: 17
+dez. 08, 2023 8:59:34 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Alcatra Completa (kg), Quantidade: 41
+dez. 08, 2023 8:59:34 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$ 1.781,83
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Coxão Mole (kg), Quantidade: 3
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Morango (250g), Quantidade: 2
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Alcatra Completa (kg), Quantidade: 9
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Costela  (kg), Quantidade: 5
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Repolho Verde (Uni), Quantidade: 3
+dez. 11, 2023 8:31:39 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$ 467,33
+dez. 11, 2023 10:42:36 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Acem (kg), Quantidade: 2
+dez. 11, 2023 10:42:36 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : R$ 45,14
+dez. 29, 2023 2:48:04 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Maçã, Quantidade: 3
+dez. 29, 2023 2:48:04 AM dao.LoggerUtil registrarLog
+INFO: Venda concluída - Produto: Picanha, Quantidade: 2
+dez. 29, 2023 2:48:04 AM dao.LoggerUtil registrarLog
+INFO:  Valor da Venda : 00,00

@@ -7,7 +7,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import view.VendasView;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +19,7 @@ public class PagamentosView extends javax.swing.JFrame {
 
     private HistoricoView historicoView;
     private VendasView vView;
+    private String valor;
 
     private static VendasView obterInstanciaVendasView() {
         return new VendasView();
@@ -31,7 +34,12 @@ public class PagamentosView extends javax.swing.JFrame {
         this.vView = vendasView;
         this.historicoView = historicoView;
     }
-    
+
+    PagamentosView() {
+        initComponents();
+        this.vView = obterInstanciaVendasView();
+        this.historicoView = obterInstanciaHistoricoView();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -42,11 +50,11 @@ public class PagamentosView extends javax.swing.JFrame {
         jlValorTotal = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jbPagamentoCredito = new javax.swing.JButton();
+        jbPagamentoDebito = new javax.swing.JButton();
+        jbAbrirPagamentoVale = new javax.swing.JButton();
         jBConcluirPagamento = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jBAbrirPagamentoPix = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -97,28 +105,33 @@ public class PagamentosView extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/Dinheiro.png"))); // NOI18N
         jButton1.setText("   Dinheiro                                                                                                           ");
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 51, 51));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/icons8-frente-do-cartão-de-crédito-50.png"))); // NOI18N
-        jButton2.setText("    Cartão de Crédito                                                                                           ");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbPagamentoCredito.setBackground(new java.awt.Color(204, 204, 204));
+        jbPagamentoCredito.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jbPagamentoCredito.setForeground(new java.awt.Color(51, 51, 51));
+        jbPagamentoCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/icons8-frente-do-cartão-de-crédito-50.png"))); // NOI18N
+        jbPagamentoCredito.setText("    Cartão de Crédito                                                                                           ");
+        jbPagamentoCredito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbPagamentoCreditoActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(204, 204, 204));
-        jButton3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(51, 51, 51));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/CartaoZinhoVermei.png"))); // NOI18N
-        jButton3.setText("    Cartão de Debito                                                                                            ");
+        jbPagamentoDebito.setBackground(new java.awt.Color(204, 204, 204));
+        jbPagamentoDebito.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jbPagamentoDebito.setForeground(new java.awt.Color(51, 51, 51));
+        jbPagamentoDebito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/CartaoZinhoVermei.png"))); // NOI18N
+        jbPagamentoDebito.setText("    Cartão de Debito                                                                                            ");
+        jbPagamentoDebito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPagamentoDebitoActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(204, 204, 204));
-        jButton4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(51, 51, 51));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/1034362_payment_bank_card_credit_finance_icon.png"))); // NOI18N
-        jButton4.setText("    Vale Alimentação                                                                                          ");
+        jbAbrirPagamentoVale.setBackground(new java.awt.Color(204, 204, 204));
+        jbAbrirPagamentoVale.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jbAbrirPagamentoVale.setForeground(new java.awt.Color(51, 51, 51));
+        jbAbrirPagamentoVale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/1034362_payment_bank_card_credit_finance_icon.png"))); // NOI18N
+        jbAbrirPagamentoVale.setText("    Vale Alimentação                                                                                          ");
 
         jBConcluirPagamento.setBackground(new java.awt.Color(0, 102, 204));
         jBConcluirPagamento.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -130,11 +143,16 @@ public class PagamentosView extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(204, 204, 204));
-        jButton6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(51, 51, 51));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/Pix.png"))); // NOI18N
-        jButton6.setText("   Pix                                                                                                                    ");
+        jBAbrirPagamentoPix.setBackground(new java.awt.Color(204, 204, 204));
+        jBAbrirPagamentoPix.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jBAbrirPagamentoPix.setForeground(new java.awt.Color(51, 51, 51));
+        jBAbrirPagamentoPix.setIcon(new javax.swing.ImageIcon(getClass().getResource("/viewImg/Pix.png"))); // NOI18N
+        jBAbrirPagamentoPix.setText("   Pix                                                                                                                    ");
+        jBAbrirPagamentoPix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAbrirPagamentoPixActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -164,10 +182,10 @@ public class PagamentosView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbPagamentoCredito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbPagamentoDebito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbAbrirPagamentoVale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBAbrirPagamentoPix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -196,13 +214,13 @@ public class PagamentosView extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbPagamentoCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbPagamentoDebito, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbAbrirPagamentoVale, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBAbrirPagamentoPix, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,9 +252,10 @@ public class PagamentosView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jbPagamentoCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPagamentoCreditoActionPerformed
+        PagCred pagCredito = new PagCred();
+        pagCredito.setVisible(true);
+    }//GEN-LAST:event_jbPagamentoCreditoActionPerformed
 
     private void jBConcluirPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConcluirPagamentoActionPerformed
         try {
@@ -267,7 +286,7 @@ public class PagamentosView extends javax.swing.JFrame {
                     }
                 }
                 String valores = jlValorTotal.getText();
-                LoggerUtil.registrarLog(" Valor da Venda : "+ valores );
+                LoggerUtil.registrarLog(" Valor da Venda : " + valores);
                 // Obter o histórico e atualizar a tabela
                 historicoView.atualizarTabelaHistorico(hDao.atualizarHistorico());
                 JOptionPane.showMessageDialog(null, "Venda registrada com sucesso!");
@@ -284,6 +303,18 @@ public class PagamentosView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBConcluirPagamentoActionPerformed
 
+    private void jBAbrirPagamentoPixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAbrirPagamentoPixActionPerformed
+        PagPix pgPix = new PagPix(this);
+        pgPix.setVisible(true);
+        String totalidade = pegarValor();
+        pgPix.valorPagarPagPix(totalidade);
+    }//GEN-LAST:event_jBAbrirPagamentoPixActionPerformed
+
+    private void jbPagamentoDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPagamentoDebitoActionPerformed
+        PagCred pagCredito = new PagCred();
+        pagCredito.setVisible(true);
+    }//GEN-LAST:event_jbPagamentoDebitoActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -297,12 +328,9 @@ public class PagamentosView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAbrirPagamentoPix;
     private javax.swing.JButton jBConcluirPagamento;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -312,20 +340,38 @@ public class PagamentosView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jbAbrirPagamentoVale;
+    private javax.swing.JButton jbPagamentoCredito;
+    private javax.swing.JButton jbPagamentoDebito;
     private javax.swing.JLabel jlValorTotal;
     // End of variables declaration//GEN-END:variables
 
     void valorPagar(String totalidade) {
         try {
-            String valorTotal = totalidade;
-            System.out.println("Valor Total: " + valorTotal);
+            String valorSemSimbolo = totalidade.replaceAll("[^\\d.]", "");
+            System.out.println("Valor Total: " + valorSemSimbolo);
 
-            jlValorTotal.setText(valorTotal);
+            double valorNumerico = Double.parseDouble(valorSemSimbolo);
+
+            // Formata o número para exibir "R$" e apenas duas casas decimais
+            DecimalFormat decimalFormat = new DecimalFormat("R$ #,##0.00");
+            String valorFormatado = decimalFormat.format(valorNumerico);
+
+            System.out.println("Valor Total: " + valorFormatado);
+
+            // Define o valor formatado no componente jlValorTotal
+            jlValorTotal.setText(valorFormatado);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
+    public String pegarValor() {
+        String totalidade = jlValorTotal.getText();
+        return totalidade;
+    }
+
+    public void setValor(String valor) {
+        this.valor = jlValorTotal.getText();
+    }
 }
